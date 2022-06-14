@@ -22,9 +22,12 @@ import Header from './components/header/index.vue'
 import MainView from './components/mainView/index.vue'
 import SideList from './components/sideList/index.vue'
 import SocketService from '@/utils/websocket';
-import {reactive,onBeforeMount,provide} from 'vue'
-const info = JSON.parse(localStorage.getItem('login'))
-provide('userInfo',{qq:info.qq,username:info.username})
+import {reactive,onBeforeMount,provide,computed} from 'vue'
+import { useUserStore } from '@/store/user'
+const userStore = useUserStore()
+let userInfo = computed(()=>userStore.info)
+provide('userInfo', userInfo.value)
+console.log(userInfo.value);
     const data = reactive({
       socketServe: SocketService.Instance,
     });

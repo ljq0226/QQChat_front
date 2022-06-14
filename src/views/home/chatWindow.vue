@@ -7,7 +7,7 @@
       <div class="messageIcon"><img src="@/assets/images/home/messeage.png" alt="" /></div>
     </div>
     <div class="chat_Message">
-      <ChatMessage></ChatMessage>
+      <ChatMessage :record="record"></ChatMessage>
     </div>
     <div class="chat">
       <div class="icons">
@@ -29,26 +29,25 @@
 </template>
 <script setup >
 import SocketService from '@/utils/websocket';
-import { onBeforeMount, reactive, ref,inject } from 'vue'
+import { onBeforeMount, reactive, ref,inject,computed } from 'vue'
 import { useRoute } from 'vue-router'
 import {useRecordStore } from '../..//store/record.js'
 import ChatMessage from './chatMessage.vue'
 const recordStore = useRecordStore()
 const router = useRoute()
-let record = reactive([])
+let record = computed(()=> recordStore.recordInfo)
+const userInfo = JSON.parse(localStorage.getItem('login'))
     let newMessage = reactive({
       receiverQq:router.query.qq,
       message:''
     })
     let socket = inject('socket')
-    console.log(socket);
-    console.log(router.query.qq);
     socket.registerCallBack('callback1',socket);
     const sendData = () => {
-      console.log('发送的数据为',JSON.stringify(newMessage));
       socket.send(newMessage);
       newMessage.message=''
-      // recordStore.getAllRecord()
+      recordStore.getAllRecord(router.query.qq,userInfo.qq)
+
     };
 
 </script>

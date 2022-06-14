@@ -32,14 +32,13 @@
   </div>
 </template>
 <script setup>
-import { ref,computed} from 'vue'
+import { ref,computed,defineProps} from 'vue'
 import { useUserStore } from '../../store/user'
 import {useRecordStore } from '../..//store/record.js'
 const recordStore = useRecordStore()
-// eslint-disable-next-line vue/require-default-prop
-const showModel = ref(false)
 const userStore = useUserStore()
 let record = computed(()=> recordStore.recordInfo)
+const p = defineProps({record:Array})
 
 </script>
 <style lang="scss" scoped>

@@ -23,10 +23,7 @@ export default class SocketService {
             return console.log('您的浏览器不支持WebSocket')
         }
         let { qq } = JSON.parse(localStorage.getItem('login'))
-        // let url = 'ws://localhost:8080/chat/' + 111 + ''
-        let url = 'ws://localhost:8080/myQQ/chat/111'
-        console.log(url)
-        this.ws = new WebSocket(url)
+        this.ws = new WebSocket(`ws://localhost:8080/myQQ/chat/${qq}`)
         // 连接成功的事件
         this.ws.onopen = () => {
             console.log('连接服务端成功了')

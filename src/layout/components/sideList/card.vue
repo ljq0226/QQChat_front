@@ -7,7 +7,7 @@
       />
     </div>
     <div class="'middle" style="flex: 1; margin-top: 4px">
-      <div class="username" style="font-size: 16px; font-weight: bold">{{ friend.username }}</div>
+      <div class="username" style="font-size: 16px; font-weight: bold">{{ friend.username }}({{friend.qq}})</div>
       <div class="message" style="font-size: 8px; color: gray">{{ }}</div>
     </div>
     <div class="right" style="font-size: 5px; color: gray; margin-top: 5px">昨天</div>

@@ -15,8 +15,8 @@ export const useRecordStore = defineStore('record', {
                         return moment(a.createdDate).valueOf() - moment(b.createdDate).valueOf()
                     })
                     record.map(item => {
-                        if (item.senderQq == senderQQ) item.flag = 1
-                        else item.flag = 0
+                        if (item.senderQq == senderQQ) item.flag = 0
+                        else item.flag = 1
                     })
                     this.recordInfo = record
                     return record

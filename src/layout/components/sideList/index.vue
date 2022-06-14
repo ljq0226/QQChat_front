@@ -16,9 +16,8 @@ const router = useRouter()
 let record = reactive({})
 let qq = computed(()=>userStore.info.qq)
 console.log(qq)
-onBeforeMount(() => {
-  friendStore.getFriendList('111')
-})
+
+const userInfo = JSON.parse(localStorage.getItem('login'))
 const goChat = (item) => {
   console.log('点击进入')
   const sth = unref(item)
@@ -26,9 +25,10 @@ const goChat = (item) => {
   let username = sth.username
   router.push({ path: '/chatWindow', query: { qq, username } })
   //每次点击进入chatWindow时 改变状态
-  const userInfo = JSON.parse(localStorage.getItem('login'))
   recordStore.getAllRecord(qq,userInfo.qq)
 }
-
+onBeforeMount(() => {
+  friendStore.getFriendList(userInfo.qq)
+})
 </script>
 <style lang="scss" scoped></style>

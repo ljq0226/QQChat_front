@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, unref } from 'vue'
+import { provide, ref, unref ,computed} from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
 const router = useRouter()
@@ -56,10 +56,10 @@ async function handleLogin() {
   try {
     //发送login请求 获取用户信息
     const data =await userStore.login(qq, password)
-    console.log(data);
     if(data && typeof data != 'string') {
       ElMessage.success('登录成功');
       localStorage.setItem('login', JSON.stringify(data))
+      userStore.info = data
       router.push('/home')
     }else{
       ElMessage.warning(data)
