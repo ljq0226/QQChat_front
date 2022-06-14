@@ -7,7 +7,7 @@
       <div class="messageIcon"><img src="@/assets/images/home/messeage.png" alt="" /></div>
     </div>
     <div class="chat_Message">
-      <ChatMessage :params="{ record: recordStore.recordInfo, userInfo: router.query }"></ChatMessage>
+      <ChatMessage></ChatMessage>
     </div>
     <div class="chat">
       <div class="icons">
@@ -22,33 +22,38 @@
         <div class="icons_open"></div>
       </div>
       <div class="sendMessage">
-        <textarea v-model="newMessage" @keydown.enter="sendNewMessage" />
+        <textarea v-model="newMessage.messeage" @keydown.enter="sendData" />
       </div>
     </div>
   </div>
 </template>
 <script setup >
+import SocketService from '@/utils/websocket';
 import { onBeforeMount, reactive, ref,inject } from 'vue'
 import { useRoute } from 'vue-router'
 import {useRecordStore } from '../..//store/record.js'
 import ChatMessage from './chatMessage.vue'
 const recordStore = useRecordStore()
 const router = useRoute()
-let friend = reactive({})
-let record = reactive({})
-const newMessage = ref('')
-onBeforeMount(() => {
- init()
+let record = reactive([])
+    const data = reactive({
+      socketServe: SocketService.Instance,
+    });
+
+    let newMessage = reactive({
+      receiverQq:router.query.qq,
+      messeage:''
+    })
+    console.log(router.query.qq);
+    data.socketServe.registerCallBack('callback1', data.socketServe);
+    const sendData = () => {
+      console.log('发送的数据为',JSON.stringify(newMessage));
+      data.socketServe.send(JSON.stringify(newMessage));
+    };
+onBeforeMount(()=>{
+  SocketService.Instance.connect();
+    data.socketServe = SocketService.Instance;
 })
-const init = ()=>{
-  const {qq,username} = inject('userInfo')
-  record = recordStore.getAllRecord(router.query.qq,qq)
-}
-init()
-const sendNewMessage = () => {
-  console.log('发送新消息', newMessage.value)
-  newMessage.value = ''
-}
 </script>
 <style lang="scss" scoped>
 .chat_all {

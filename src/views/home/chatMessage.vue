@@ -1,6 +1,6 @@
 <template>
   <div class="message_all">
-    <template v-for="item in p.params.record" :key="item">
+    <template v-for="item in record" :key="item">
       <div class="time-space">
         <div class="time">
           {{ item.createdDate }}
@@ -26,43 +26,22 @@
           />
         </div>
         <div class="s-msg">{{ item.chatContent }}</div>
-
         <div class="s-space"></div>
       </div>
     </template>
-   
+    <button @click="sendData">发送消息</button>
   </div>
 </template>
 <script setup>
-import moment from 'moment'
-import { ref, onMounted, inject } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref,computed} from 'vue'
 import { useUserStore } from '../../store/user'
-// import { Socket } from 'socket.io-client'
-// const socket = inject('socket') as Socket
+import {useRecordStore } from '../..//store/record.js'
+const recordStore = useRecordStore()
 // eslint-disable-next-line vue/require-default-prop
-const p = defineProps({ params: Object })
 const showModel = ref(false)
 const userStore = useUserStore()
-// const info: any = userStore.getUserInfo('111')
-// console.log(info)
-onMounted(() => {
-  // socket.connect() //连接socket服务器
-})
-// const send = () => {
-//   console.log('')
-//   socket.emit('socketTest', { test: '测试数据' }, (data: any) => {
-//     console.log(data)
-//   })
-// }
-const showUserInfo = () => {
-  console.log('click me ')
-  showModel.value = true
-}
-const showInfo = () => {
-  console.log('click me ')
-  showModel.value = true
-}
+let record = computed(()=> recordStore.recordInfo)
+
 </script>
 <style lang="scss" scoped>
 .message_all {

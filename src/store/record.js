@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { chatService } from '@/api/api.js'
+import moment from 'moment'
 export const useRecordStore = defineStore('record', {
     state: () => ({
         recordInfo: [],
@@ -10,8 +11,15 @@ export const useRecordStore = defineStore('record', {
             const res = await chatService.getRecorde(senderQQ, receiverQQ)
             try {
                 if (res.code === 200) {
-                    this.recordInfo = res.data
-                    return res.data
+                    const record = res.data.sort((a, b) => {
+                        return moment(a.createdDate).valueOf() - moment(b.createdDate).valueOf()
+                    })
+                    record.map(item => {
+                        if (item.senderQq == senderQQ) item.flag = 1
+                        else item.flag = 0
+                    })
+                    this.recordInfo = record
+                    return record
                 } else {
                     ElMessage.warning('请求错误')
                 }

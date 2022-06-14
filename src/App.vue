@@ -6,6 +6,10 @@
 <script setup>
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 </script>
-<style>
-
+<style >
+html,body,#app {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+}
 </style>
