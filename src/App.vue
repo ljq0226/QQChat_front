@@ -5,6 +5,7 @@
 </template>
 <script setup>
 import locale from 'element-plus/lib/locale/lang/zh-cn'
+
 </script>
 <style >
 html,body,#app {

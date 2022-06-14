@@ -21,10 +21,20 @@
 import Header from './components/header/index.vue'
 import MainView from './components/mainView/index.vue'
 import SideList from './components/sideList/index.vue'
-import { provide } from 'vue'
-
+import SocketService from '@/utils/websocket';
+import {reactive,onBeforeMount,provide} from 'vue'
 const info = JSON.parse(localStorage.getItem('login'))
 provide('userInfo',{qq:info.qq,username:info.username})
+    const data = reactive({
+      socketServe: SocketService.Instance,
+    });
+    SocketService.Instance.connect();
+    data.socketServe = SocketService.Instance;
+provide('socket',data.socketServe)
+onBeforeMount(()=>{
+ 
+})
+
 </script>
 
 <style lang="scss" scoped>

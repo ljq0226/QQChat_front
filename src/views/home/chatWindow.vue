@@ -22,7 +22,7 @@
         <div class="icons_open"></div>
       </div>
       <div class="sendMessage">
-        <textarea v-model="newMessage.messeage" @keydown.enter="sendData" />
+        <textarea v-model="newMessage.message" @keydown.enter="sendData" />
       </div>
     </div>
   </div>
@@ -36,24 +36,21 @@ import ChatMessage from './chatMessage.vue'
 const recordStore = useRecordStore()
 const router = useRoute()
 let record = reactive([])
-    const data = reactive({
-      socketServe: SocketService.Instance,
-    });
-
     let newMessage = reactive({
       receiverQq:router.query.qq,
-      messeage:''
+      message:''
     })
+    let socket = inject('socket')
+    console.log(socket);
     console.log(router.query.qq);
-    data.socketServe.registerCallBack('callback1', data.socketServe);
+    socket.registerCallBack('callback1',socket);
     const sendData = () => {
       console.log('发送的数据为',JSON.stringify(newMessage));
-      data.socketServe.send(JSON.stringify(newMessage));
+      socket.send(newMessage);
+      newMessage.message=''
+      // recordStore.getAllRecord()
     };
-onBeforeMount(()=>{
-  SocketService.Instance.connect();
-    data.socketServe = SocketService.Instance;
-})
+
 </script>
 <style lang="scss" scoped>
 .chat_all {

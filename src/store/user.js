@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia'
 import { userService } from '@/api/api.js'
 export const useUserStore = defineStore('user', {
-    state: () => {
-        return {
-            info: {},
-        }
-    },
+    state: () => ({
+       info:{}
+    }),
     actions: {
         errHandler(err) {
             console.log(err)
@@ -29,10 +27,8 @@ export const useUserStore = defineStore('user', {
         },
         async login(qq, password) {
             const res = await userService.login(qq, password)
-            console.log(res)
             if (res.code === 200) {
                 this.info = res.data
-                //
                 return res.data
             } else if (res.code === 500) {
                 return res.msg

@@ -29,7 +29,6 @@
         <div class="s-space"></div>
       </div>
     </template>
-    <button @click="sendData">发送消息</button>
   </div>
 </template>
 <script setup>
@@ -55,7 +54,7 @@ let record = computed(()=> recordStore.recordInfo)
     justify-content: center;
     .time {
       font-size: 10px;
-      font-color: gray;
+      color: gray;
       opacity: 0.6;
     }
   }

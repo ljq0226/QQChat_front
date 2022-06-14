@@ -60,7 +60,7 @@ async function handleLogin() {
     if(data && typeof data != 'string') {
       ElMessage.success('登录成功');
       localStorage.setItem('login', JSON.stringify(data))
-      router.push('/')
+      router.push('/home')
     }else{
       ElMessage.warning(data)
     }

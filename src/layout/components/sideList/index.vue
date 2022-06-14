@@ -1,19 +1,21 @@
 <template>
-  <template v-for="item in friendStore.friendInfo" :key="item.qq">
+  <template v-for="item in friendsInfo" :key="item.qq">
     <Card :friend="item" @click="goChat(item)"></Card>
   </template>
 </template>
 <script setup>
 import { useFriendStore } from '@/store/friend'
-import { onBeforeMount, reactive, ref, unref,inject } from 'vue'
+import { onBeforeMount, reactive, ref, unref,inject ,computed} from 'vue'
 import { useRouter } from 'vue-router'
 import Card from './card.vue'
 import {useRecordStore } from '@/store/record.js'
 const recordStore = useRecordStore()
 const friendStore = useFriendStore()
-const friendsInfo = reactive(friendStore.friendInfo)
+const friendsInfo = computed(()=>friendStore.friendInfo)
 const router = useRouter()
 let record = reactive({})
+let qq = computed(()=>userStore.info.qq)
+console.log(qq)
 onBeforeMount(() => {
   friendStore.getFriendList('111')
 })
