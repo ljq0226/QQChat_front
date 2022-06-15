@@ -1,3 +1,5 @@
+// import { useRecordStore } from '@/store/record'
+// var recordStore = useRecordStore()
 export default class SocketService {
     static instance = null
     static get Instance() {
@@ -42,9 +44,15 @@ export default class SocketService {
             }, 500 * this.connectRetryCount)
         }
         // 得到服务端发送过来的数据
-        this.ws.onmessage = msg => {
-            console.log(msg.data, '从服务端获取到了数据')
-        }
+        // this.ws.onmessage = msg => {
+        //     console.log('从服务端获取到了数据',msg)
+        //     return msg;
+        //     // let senderQq = msg.data.split(',')[0]
+        //     // let { qq } = JSON.parse(localStorage.getItem('qq'))
+        //     // console.log(senderQq, qq)
+        //     // recordStore.getAllRecord(senderQq, qq)
+        // }
+        
     }
     // 回调函数的注册
     registerCallBack(socketType, callBack) {
@@ -70,5 +78,12 @@ export default class SocketService {
                 this.send(data)
             }, this.sendRetryCount * 500)
         }
+    }
+    onmessage(){
+        const res = this.ws.onmessage = msg => {
+            console.log('从服务端获取到了数据',msg)
+            return msg;
+        }
+        return res
     }
 }

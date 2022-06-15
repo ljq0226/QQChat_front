@@ -5,7 +5,7 @@ export const userService = {
         return get(`user/info?qq=${qq}`)
     },
     registerUser(username, password) {
-        return post(`user/register?username=${111}&password=${1234}`)
+        return post(`user/register?username=${username}&password=${password}`)
     },
     login(qq, password) {
         return post(`user/login?qq=${qq}&password=${password}`)
@@ -22,7 +22,7 @@ export const friendService = {
     },
     //添加好友
     addFriend(selfQQ, friendQQ) {
-        return post(`friend/addFriend?selfQQ=${selfQQ}&friendQQQQ=${friendQQ}`)
+        return post(`friend/addFriend?selfQQ=${selfQQ}&friendQQ=${friendQQ}`)
     },
 }
 export const chatService = {

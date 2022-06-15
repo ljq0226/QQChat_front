@@ -44,7 +44,6 @@ export const useRecordStore = defineStore('record', {
                     })
                     record = record.reverse()
                     this.recordInfo = record
-                    console.log(record)
                     return record
                 } else {
                     ElMessage.warning('请求错误')

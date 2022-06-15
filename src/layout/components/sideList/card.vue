@@ -22,6 +22,11 @@ const props = defineProps({ friend: Object })
   display: flex;
   flex-flow: row;
   justify-content: space-between;
+   &:hover {
+    background-color: rgb(228, 228, 228);
+    color: $primaryColor;
+    cursor: pointer;
+    }
   .left {
     &:hover {
       cursor: pointer;

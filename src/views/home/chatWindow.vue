@@ -29,27 +29,33 @@
 </template>
 <script setup >
 import SocketService from '@/utils/websocket';
-import { onBeforeMount, reactive, ref,inject,computed } from 'vue'
+import { onBeforeMount, reactive, ref,inject,computed,watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import {useRecordStore } from '../..//store/record.js'
 import ChatMessage from './chatMessage.vue'
+import {useWebsocketStore} from '../..//store/websocket.js'
 const recordStore = useRecordStore()
 const router = useRoute()
 let record = computed(()=> recordStore.recordInfo)
+let receiverQq = computed(()=>router.query.qq)
+let returnMsg = computed(()=>useWebsocketStore.msg)
+const watch = watchEffect(()=> {
+	// 该函数会立即执行，记录响应式数据，当其变化时，会放入微队列执行
+})
 const userInfo = JSON.parse(localStorage.getItem('login'))
     let newMessage = reactive({
-      receiverQq:router.query.qq,
+      receiverQq,
       message:''
     })
     let socket = inject('socket')
-    socket.registerCallBack('callback1',socket);
     const sendData = () => {
       socket.send(newMessage);
       newMessage.message=''
       recordStore.getAllRecord(router.query.qq,userInfo.qq)
-
     };
+onBeforeMount(()=>{
 
+})
 </script>
 <style lang="scss" scoped>
 .chat_all {

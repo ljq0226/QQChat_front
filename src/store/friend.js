@@ -3,7 +3,7 @@ import { friendService } from '@/api/api.js'
 export const useFriendStore = defineStore('friend', {
     state: () => ({
         friendInfo: [],
-        searchFriendList:[]
+        searchFriendList: [],
     }),
     getters: {},
     actions: {
@@ -25,6 +25,21 @@ export const useFriendStore = defineStore('friend', {
             try {
                 if (res.code === 200) {
                     this.searchFriendList = res.data
+                    return res.data
+                } else {
+                    ElMessage.warning('请求错误')
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        },
+        async addFriend(selfQQ, friendQQ) {
+            console.log(selfQQ, friendQQ)
+            const res = await friendService.addFriend(selfQQ, friendQQ)
+            try {
+                if (res.code === 200) {
+                    this.getFriendList(selfQQ)
+                    ElMessage.success('添加好友成功!')
                     return res.data
                 } else {
                     ElMessage.warning('请求错误')

@@ -14,7 +14,7 @@
          @blur="loseBlur"
          />
       </div>
-      <div class="searchList" v-if="showList">
+      <div class="searchList"  :ref="showList">
   <template v-for="item in searchFriendList" :key="item.qq">
     <Card :friend="item" ></Card>
   </template>
@@ -32,7 +32,7 @@ import { useFriendStore } from '@/store/friend'
 import Card from './card/index.vue'
 let friendStore = useFriendStore()
 let searchContent = ref('')
-let showList = ref(false)
+let showList = ref('showList')
 let searchFriendList = computed(()=>friendStore.searchFriendList)
 const search =async (content) =>{
   await friendStore.getSearchFriendList(content)
@@ -40,22 +40,26 @@ const search =async (content) =>{
 }
 const handleKeydown =async (content) =>{
   if(!searchFriendList){
-    showList = false;
+    showList.value.style.display = 'none'
   }
    setTimeout(async()=>{
   if(content){
  await friendStore.getSearchFriendList(content)
- showList = true
+ showList.value.style.display = 'block'
   }
   },1000)
 }
 const getFocus = ()=>{
-  console.log(1)
-  showList = true
+  showList.value.style.display = 'block'
 }
 const loseBlur = () =>{
   searchContent=''
-  //showList = false;
+  setTimeout(()=>{
+showList.value.style.display = 'none'
+searchFriendList=[]
+  },500)
+  
+  
 }
 
 
@@ -111,7 +115,7 @@ const loseBlur = () =>{
       width: 10.4vw;
       background-color: rgb(225,226, 228);
       overflow: auto;
-      // display:none;
+      display:none;
     }
   }
   .left_all_right {

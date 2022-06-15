@@ -4,7 +4,6 @@
       <div class="header">
         <Header></Header>
       </div>
-
       <div class="bottom">
         <div class="sideList">
           <SideList></SideList>
@@ -24,15 +23,24 @@ import SideList from './components/sideList/index.vue'
 import SocketService from '@/utils/websocket';
 import {reactive,onBeforeMount,provide,computed} from 'vue'
 import { useUserStore } from '@/store/user'
+import {useWebsocketStore} from '@/store/websocket'
 const userStore = useUserStore()
+const websocketStore = useWebsocketStore()
 let userInfo = computed(()=>userStore.info)
 provide('userInfo', userInfo.value)
-console.log(userInfo.value);
-    const data = reactive({
-      socketServe: SocketService.Instance,
+//     const data = reactive({
+//       socketServe: SocketService.Instance,
+//     });
+//     SocketService.Instance.connect();
+//     SocketService.Instance.onmessage();
+//     data.socketServe = SocketService.Instance;
+// provide('socket',data.socketServe)
+ const data = reactive({
+      socketServe: websocketStore.Instance,
     });
-    SocketService.Instance.connect();
-    data.socketServe = SocketService.Instance;
+    websocketStore.Instance.connect();
+    websocketStore.Instance.connect();
+    data.socketServe = websocketStore.Instance;
 provide('socket',data.socketServe)
 onBeforeMount(()=>{
  
@@ -75,11 +83,10 @@ onBeforeMount(()=>{
         overflow: auto;
       }
       .mainView {
-        background-image: url('@/assets/images/home/qqbc.png');
+        background-image: url('../assets/images/login_bg.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        background-color: rgba(253, 253, 253, 0.5);
         display: flex;
       }
     }

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { userService } from '@/api/api.js'
 export const useUserStore = defineStore('user', {
     state: () => ({
-       info:{}
+        info: {},
     }),
     actions: {
         errHandler(err) {
@@ -18,12 +18,18 @@ export const useUserStore = defineStore('user', {
                 }
             }, this.errHandler)
         },
-        registerUser(username, password) {
-            userService.registerUser(username, password).then(res => {
-                if (res.code === 200) {
-                    console.log(res.data)
-                }
-            }, this.errHandler)
+        async registerUser(username, password) {
+            const res = await userService.registerUser(username, password)
+            console.log(res)
+            if (res.code === 200) {
+                const { qq, passwords, username } = res.data
+                localStorage.setItem('login', JSON.stringify(res.data))
+                return res.data
+            } else if (res.code === 500) {
+                return res.msg
+            } else {
+                return '请求失败'
+            }
         },
         async login(qq, password) {
             const res = await userService.login(qq, password)
