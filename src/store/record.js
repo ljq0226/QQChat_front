@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { chatService } from '@/api/api.js'
 import moment from 'moment'
-moment.locale('cn'); 
+moment.locale('cn')
 export const useRecordStore = defineStore('record', {
     state: () => ({
         recordInfo: [],
@@ -10,11 +10,16 @@ export const useRecordStore = defineStore('record', {
     actions: {
         async getAllRecord(senderQQ, receiverQQ) {
             const res = await chatService.getRecorde(senderQQ, receiverQQ)
+            console.log(senderQQ, receiverQQ)
+            console.log(res)
             try {
                 if (res.code === 200) {
+                    console.log('22222')
                     let record = res.data.sort((a, b) => {
                         return moment(a.createdDate).valueOf() - moment(b.createdDate).valueOf()
                     })
+                    console.log('3333')
+                    console.log(record)
                     record = record.reverse()
                     let timeDiffrence = 0
                     let timeFromNow = 0
@@ -23,7 +28,7 @@ export const useRecordStore = defineStore('record', {
                         timeFromNow = moment(Date.now()).valueOf() - moment(record[i].createdDate).valueOf()
                         if (timeFromNow < 180000) {
                             record[i].updatedDate = ''
-                        }else{
+                        } else {
                             record[i].updatedDate = moment(record[i].createdDate).calendar(null, {
                                 sameDay: 'HH:mm',
                                 lastDay: '[昨天]  HH:mm',
@@ -44,6 +49,7 @@ export const useRecordStore = defineStore('record', {
                     })
                     record = record.reverse()
                     this.recordInfo = record
+                    console.log(record)
                     return record
                 } else {
                     ElMessage.warning('请求错误')

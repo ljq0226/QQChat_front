@@ -54,11 +54,12 @@ export const useWebsocketStore = defineStore('websocket', {
                 }, 500 * this.connectRetryCount)
             }
             // 得到服务端发送过来的数据
-            this.ws.onmessage = msg => {
+            this.ws.onmessage = async msg => {
                 this.msg = msg.data
                 console.log('从服务端获取到了数据', msg.data)
                 let { qq } = JSON.parse(localStorage.getItem('login'))
-                recordStore.getAllRecord(msg.data.split(',')[0].qq)
+                console.log(msg.data.split(',')[0], qq)
+                await recordStore.getAllRecord(msg.data.split(',')[0],qq)
                 return msg.data
             }
         },
