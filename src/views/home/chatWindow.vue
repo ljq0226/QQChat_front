@@ -35,10 +35,11 @@ import {useRecordStore } from '../..//store/record.js'
 import ChatMessage from './chatMessage.vue'
 import {useWebsocketStore} from '../..//store/websocket.js'
 const recordStore = useRecordStore()
+const websocketStore = useWebsocketStore()
 const router = useRoute()
 let record = computed(()=> recordStore.recordInfo)
 let receiverQq = computed(()=>router.query.qq)
-let returnMsg = computed(()=>useWebsocketStore.msg)
+let returnMsg = computed(()=>websocketStore.msg)
 const watch = watchEffect(()=> {
 	// 该函数会立即执行，记录响应式数据，当其变化时，会放入微队列执行
 })

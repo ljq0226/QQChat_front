@@ -39,7 +39,6 @@ provide('userInfo', userInfo.value)
       socketServe: websocketStore.Instance,
     });
     websocketStore.Instance.connect();
-    websocketStore.Instance.connect();
     data.socketServe = websocketStore.Instance;
 provide('socket',data.socketServe)
 onBeforeMount(()=>{
@@ -52,7 +51,10 @@ onBeforeMount(()=>{
 .root {
   height: 100vh;
   width: 100vw;
-  background-color: rgb(2, 121, 91);
+  background-image: url('../assets/images/home/bcc.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;

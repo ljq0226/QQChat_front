@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { useRecordStore } from './record'
+import { useUserStore } from './user'
 import SocketService from '@/utils/websocket.js'
 export const useWebsocketStore = defineStore('websocket', {
     state: () => ({
@@ -26,6 +28,8 @@ export const useWebsocketStore = defineStore('websocket', {
     },
     actions: {
         connect() {
+            const recordStore = useRecordStore()
+            const userStore = useUserStore()
             // 连接服务器
             if (!window.WebSocket) {
                 return console.log('您的浏览器不支持WebSocket')
@@ -53,7 +57,8 @@ export const useWebsocketStore = defineStore('websocket', {
             this.ws.onmessage = msg => {
                 this.msg = msg.data
                 console.log('从服务端获取到了数据', msg.data)
-                console.log(msg)
+                let { qq } = JSON.parse(localStorage.getItem('login'))
+                recordStore.getAllRecord(msg.data.split(',')[0].qq)
                 return msg.data
             }
         },

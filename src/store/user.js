@@ -8,16 +8,16 @@ export const useUserStore = defineStore('user', {
         errHandler(err) {
             console.log(err)
         },
-        getUserInfo() {
-            userService.getUserInfo('111').then(res => {
-                if (res.code === 200) {
-                    console.log(res)
-                    this.state = res.data
-                    return res
-                } else {
-                }
-            }, this.errHandler)
-        },
+        // getUserInfo() {
+        //     userService.getUserInfo('111').then(res => {
+        //         if (res.code === 200) {
+        //             console.log(res)
+        //             this.state = res.data
+        //             return res
+        //         } else {
+        //         }
+        //     }, this.errHandler)
+        // },
         async registerUser(username, password) {
             const res = await userService.registerUser(username, password)
             console.log(res)
