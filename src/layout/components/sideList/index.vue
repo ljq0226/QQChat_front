@@ -19,7 +19,6 @@ console.log(qq)
 
 const userInfo = JSON.parse(localStorage.getItem('login'))
 const goChat = (item) => {
-  console.log('点击进入')
   const sth = unref(item)
   let qq = sth.qq;
   let username = sth.username

@@ -3,7 +3,7 @@
     <template v-for="item in record" :key="item">
       <div class="time-space">
         <div class="time">
-          {{ item.createdDate }}
+          {{ item.updatedDate }}
         </div>
       </div>
       <!-- 本人发送的消息 -->
