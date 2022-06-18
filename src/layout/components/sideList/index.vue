@@ -15,8 +15,6 @@ const friendsInfo = computed(()=>friendStore.friendInfo)
 const router = useRouter()
 let record = reactive({})
 let qq = computed(()=>userStore.info.qq)
-console.log(qq)
-
 const userInfo = JSON.parse(localStorage.getItem('login'))
 const goChat = (item) => {
   const sth = unref(item)

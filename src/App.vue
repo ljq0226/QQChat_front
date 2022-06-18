@@ -10,7 +10,7 @@ import locale from 'element-plus/lib/locale/lang/zh-cn'
 <style >
 html,body,#app {
   height: 100%;
-  overflow: hidden;
   margin: 0;
+  overflow: auto;
 }
 </style>

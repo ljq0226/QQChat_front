@@ -1,12 +1,11 @@
 <template>
-  <div class="message_all">
+  <div class="message_all" ref="content">
     <template v-for="item in record" :key="item">
       <div class="time-space">
         <div class="time">
           {{ item.updatedDate }}
         </div>
       </div>
-      <!-- 本人发送的消息 -->
       <div v-if="item.flag" class="sendMsg">
         <div class="s-space"></div>
         <div class="s-msg">{{ item.chatContent }}</div>
@@ -17,7 +16,6 @@
           />
         </div>
       </div>
-      <!-- 接受到的消息 -->
       <div v-else class="receiveMsg">
         <div class="s-img" @click="showInfo">
           <el-avatar
@@ -32,22 +30,39 @@
   </div>
 </template>
 <script setup>
-import { ref,computed,defineProps} from 'vue'
+import { ref,computed,defineProps,nextTick, onUpdated, onMounted} from 'vue'
 import { useUserStore } from '../../store/user'
 import {useRecordStore } from '../..//store/record.js'
 const recordStore = useRecordStore()
 const userStore = useUserStore()
+let content = ref(null)
+nextTick((record)=>{
+  console.log(content.value.scrollHeight);
+  console.log(content.value.scrollTop);
+  content.value.scrollTop = content.value.scrollHeight;
+})
 let record = computed(()=> recordStore.recordInfo)
 const p = defineProps({record:Array})
+ const handleScroll=()=> {
+      console.log(content.value.scrollTop, '到头部的距离-------------------')
+      console.log(content.value.scrollHeight, '滚动条的总高度-------------------')
+    }
+
+onMounted(()=>{  
+ window.addEventListener('scroll',handleScroll, true);  // 监听（绑定）滚轮滚动事件
+
+})
+
+// onUpdated(()=>{
+//   setTimeout(()=>{  content.value.scrollTop = content.value.scrollHeight}, 100)
+// })
 
 </script>
 <style lang="scss" scoped>
 .message_all {
   display: flex;
   flex-direction: column;
-
   overflow: auto;
-
   .time-space {
     display: flex;
     justify-content: center;

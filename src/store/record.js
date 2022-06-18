@@ -10,16 +10,11 @@ export const useRecordStore = defineStore('record', {
     actions: {
         async getAllRecord(senderQQ, receiverQQ) {
             const res = await chatService.getRecorde(senderQQ, receiverQQ)
-            console.log(senderQQ, receiverQQ)
-            console.log(res)
             try {
                 if (res.code === 200) {
-                    console.log('22222')
                     let record = res.data.sort((a, b) => {
                         return moment(a.createdDate).valueOf() - moment(b.createdDate).valueOf()
                     })
-                    console.log('3333')
-                    console.log(record)
                     record = record.reverse()
                     let timeDiffrence = 0
                     let timeFromNow = 0
@@ -32,7 +27,7 @@ export const useRecordStore = defineStore('record', {
                             record[i].updatedDate = moment(record[i].createdDate).calendar(null, {
                                 sameDay: 'HH:mm',
                                 lastDay: '[昨天]  HH:mm',
-                                lastWeek: '[last] dddd HH:mm',
+                                lastWeek: 'dddd HH:mm',
                                 sameElse: 'MM[月]DD[日]  HH:mm',
                             })
                         }
@@ -49,7 +44,6 @@ export const useRecordStore = defineStore('record', {
                     })
                     record = record.reverse()
                     this.recordInfo = record
-                    console.log(record)
                     return record
                 } else {
                     ElMessage.warning('请求错误')

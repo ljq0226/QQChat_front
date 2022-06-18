@@ -118,7 +118,7 @@ async function handleRegister(){
     const data =await userStore.registerUser(username, password)
     console.log(data);
     if(data) {
-      ElMessage.success('注册并登录成功');
+      ElMessage.success('注册成功');
       console.log(data);
       loginInfo.value.qq = data.qq;
       loginInfo.value.password = data.password;
